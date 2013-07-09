@@ -16,8 +16,8 @@ To account for this uncertainty, the class returns a "certainty score" with each
 Usage Instructions
 ======
 
-1. Instantiate the <code>ExtractNameParts</code> object, optionally passing in the name to the constructor: <code>$extractor = new ExtractNameParts($nameToSplit);</code>
+1. Instantiate the <code>ExtractNameParts</code> object, passing in the name to the constructor: <code>$extractor = new ExtractNameParts($nameToSplit);</code>
 
 2. Get the results. <code>$extractor->getNameParts();</code> will return an array with keys 'firstName', 'lastName', and, when it's detected, 'middleInitial'. The certainty score associated with this split is available from <code>$extractor->getCertaintyScore();</code>. An unmodified version name provided is available from <code>$extractor->getUnmodifiedName()</code>, should you want it.
 
-3. If you need to split more than one name, you can simply modify the existing <code>ExtractNameParts</code> instance, rather than creating another one. You can do this with the <code>setFullName()</code> method, e.g. <code>$extractor->setFullName($newName);</code>. (Making the object mutable like this has some downsides but I think it's the right call. I'm open to being convinced otherwise though.)
+3. If you need to split more than one name, you can simply create a new <code>ExtractNameParts</code> instance.
