@@ -4,8 +4,7 @@ class ExtractNameParts
 {
 
     /**
-     * @var string Holds an unmodified copy of the full name the class is currently working
-     * with (either from {@link __construct() the constructor} or {@link setFullName()}.
+     * @var string Holds an unmodified copy of the full name the class was constructed with
      */
     protected $fullName;
 
@@ -27,23 +26,6 @@ class ExtractNameParts
     public function __construct($fullNameString = '')
     {
         $this->fullName = trim((string) $fullNameString);
-    }
-
-    /**
-     * This setter allows the same ExtractNameParts object to be repurposed to work on
-     * a different name after instantiation (so a new object isn't required for each name).
-     * 
-     * Using a setter probably encourages better testability/dependency management than  
-     * making this class static would, since static public methods function like globals.
-     * 
-     * @param string $fullNameString See {@link $fullName}
-     */
-    public function setFullName($fullNameString)
-    {
-        $this->fullName = trim((string) $fullNameString);
-
-        $this->nameParts = null;
-        $this->certaintyScore = null;
     }
 
     protected function processName()
@@ -172,17 +154,19 @@ class ExtractNameParts
 
     public function getNameParts()
     {
-        if ($this->nameParts != NULL)
-        {
-            return $this->nameParts;
+        if ($this->nameParts == NULL) {
+            $this->processName();
         }
-
-        $this->processName();
+        
         return $this->nameParts;
     }
 
     public function getCertaintyScore()
     {
+        if($this->nameParts == NULL) {
+            $this->processName();
+        }
+
         return $this->certaintyScore;
     }
 
